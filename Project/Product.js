@@ -6,6 +6,7 @@ export default class Product{
         this._stock = stock;
         this._description = description;
         this._next = null;
+        this._previous = null;
     }
 
     get code(){
@@ -32,8 +33,16 @@ export default class Product{
         return this._next;
     }
 
+    get previous(){
+        return this._previous;
+    }
+
     set next(next){
         this._next = next;
+    }
+
+    set previous(previous){
+        this._previous = previous;
     }
 
     toString(){

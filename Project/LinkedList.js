@@ -3,43 +3,36 @@
 1. Las variables deberían guardar solo un tipo de dato ya que si lo intentas migrar a otro lenguege es probable que truene
 2. Es posible usar recursividad en varias funciones, sin embargo, es menos eficiente que el método actual
 */
-export default class SimpleList {
+export default class LinkedList {
     constructor() {
         this._start = null;
     }
 
-    add(node, position) {
-        if (this.query(node.code) === -1) {
-            if (this._isAValidPosition(position)) {
+    add(node) {      
+        if (this.query(node.code) === null) {
+            if (this._start != null) {
                 let aux = this._start;
-
-                if (position === 0)
-                    position = this._totalNodes() + 1;//Put at the end
-
-                if (position != 1) {
-                    while (position > 2) {
+                while (aux != null) {
+                    if (aux.code > node.code) {
+                        aux.previous.next = node;
+                        node.previous = aux.previous;
+                        node.next = aux;
+                        break;
+                    }else{
                         aux = aux.next;
-                        position--;
                     }
-                    node.next = aux.next;
-                    aux.next = node;
-                } else {//Go to the beginning
-                    node.next = this._start;
-                    this._start = node;
                 }
-
-                return true;
             } else
-                return false;
-        } else {
+                this._start = node;
+            return true;
+        } else
             return false;
-        }
     }
 
     query(code) {
         let aux = this._start;
-        let objectFound = -1;
-        while (aux != null && objectFound === -1) {
+        let objectFound = null;
+        while (aux != null && objectFound === null) {
             if (aux.code === code)
                 objectFound = aux;
             aux = aux.next;
@@ -49,26 +42,7 @@ export default class SimpleList {
     }
 
     delete(code) {
-        let isDeleted = false;
-        if (this.query(code) != -1) {
-            if (this._start.code != code) {
-                let aux = this._start;
-                while (aux.next != null && isDeleted === false) {
-                    if (aux.next.code === code) {
-                        aux.next = aux.next.next;
-                        isDeleted = true;
-                    } else
-                        aux = aux.next;
-                }
-            } else {
-                if (this._start.next != null)
-                    this._start = this._start.next
-                else
-                    this._start = null;
-                return true;
-            }
-        }
-        return isDeleted;
+
     }
 
     report() {

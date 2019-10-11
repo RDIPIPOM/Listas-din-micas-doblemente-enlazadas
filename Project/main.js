@@ -1,7 +1,7 @@
-import SimpleList from "./SimpleList.js";
+import LinkedList from "./LinkedList.js";
 import Product from "./Product.js";
 
-var inventory = new SimpleList(new Array(20));
+var inventory = new LinkedList(new Array(20));
 var tagArticle = document.querySelector('#articleReport');
 
 //Button Add
@@ -13,10 +13,10 @@ document.querySelector('#btnAdd').addEventListener('click', () => {
     let description = document.querySelector('#description').value;
     let position = Number(document.querySelector('#position').value);
 
-    if (inventory.add(new Product(code, name, cost, stock, description), position))
+    if (inventory.add(new Product(code, name, cost, stock, description)))
         alert('Producto agregado correctamente');
     else
-        alert('Posición o código no válido, por favor intente de nuevo');
+        alert('Código no válido, por favor intente de nuevo');
 });
 //Button query
 document.querySelector('#btnQuery').addEventListener('click', () => {
