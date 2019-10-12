@@ -1,28 +1,30 @@
-//////Observaciones/////
-/*
-1. Las variables deberían guardar solo un tipo de dato ya que si lo intentas migrar a otro lenguege es probable que truene
-2. Es posible usar recursividad en varias funciones, sin embargo, es menos eficiente que el método actual
-*/
 export default class LinkedList {
     constructor() {
         this._start = null;
     }
 
-    add(node) {      
+    add(node) {
         if (this.query(node.code) === null) {
             if (this._start != null) {
                 let aux = this._start;
-                while (aux != null) {
-                    if (aux.code > node.code) {
+                while (aux.next != null && node.code > aux.code)
+                    aux = aux.next;
+                if (node.code < aux.code) { //Middle
+                    if(aux != this._start){
                         aux.previous.next = node;
                         node.previous = aux.previous;
                         node.next = aux;
-                        break;
-                    }else{
-                        aux = aux.next;
+                        aux.previous = node;
+                    }else{//Bottom
+                        this._start = node;
+                        node.next = aux;
+                        aux.previous = node;
                     }
+                } else { //Top
+                    aux.next = node;
+                    node.previous = aux;
                 }
-            } else
+            } else //set start
                 this._start = node;
             return true;
         } else

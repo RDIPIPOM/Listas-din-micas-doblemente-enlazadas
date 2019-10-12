@@ -11,7 +11,6 @@ document.querySelector('#btnAdd').addEventListener('click', () => {
     let cost = Number(document.querySelector('#cost').value);
     let stock = Number(document.querySelector('#stock').value);
     let description = document.querySelector('#description').value;
-    let position = Number(document.querySelector('#position').value);
 
     if (inventory.add(new Product(code, name, cost, stock, description)))
         alert('Producto agregado correctamente');
