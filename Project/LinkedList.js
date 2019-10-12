@@ -10,12 +10,12 @@ export default class LinkedList {
                 while (aux.next != null && node.code > aux.code)
                     aux = aux.next;
                 if (node.code < aux.code) { //Middle
-                    if(aux != this._start){
+                    if (aux != this._start) {
                         aux.previous.next = node;
                         node.previous = aux.previous;
                         node.next = aux;
                         aux.previous = node;
-                    }else{//Bottom
+                    } else {//Bottom
                         this._start = node;
                         node.next = aux;
                         aux.previous = node;
@@ -44,7 +44,20 @@ export default class LinkedList {
     }
 
     delete(code) {
-
+        let objectFound = this.query(code);
+        if (objectFound != null) {
+            if (objectFound.next != null && objectFound.previous != null) { //Middle
+                objectFound.previous.next = objectFound.next;
+                objectFound.next.previous = objectFound.previous;
+            } else if (objectFound.previous === null) { //Botton
+                this._start = objectFound.next;
+                objectFound.next.previous = null;
+            } else { //top                    
+                objectFound.previous.next = null;
+            }
+            return true;
+        } else
+            return false;
     }
 
     report() {
@@ -65,26 +78,5 @@ export default class LinkedList {
             aux = aux.next;
         }
         return '<br>' + string;
-    }
-
-    _isAValidPosition(position) {
-        if (position >= 0) {
-            if (position <= this._totalNodes() + 1)
-                return true;
-            else
-                return false;
-        } else
-            return false;
-    }
-
-    _totalNodes() {
-        let totalNodes = 0;
-        let aux = this._start;
-        while (aux != null) {
-            totalNodes++;
-            aux = aux.next;
-        }
-
-        return totalNodes;
     }
 }
